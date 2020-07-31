@@ -3,7 +3,10 @@ const r = require("rethinkdb");
 const validate = require("./validate");
 const config = require("../config");
 let DATABASE_CONN;
-r.connect({ host: "db.hokkqi.services", port: 28015 }, function (err, conn) {
+r.connect({ host: config.database, port: config.db_port }, function (
+  err,
+  conn
+) {
   if (err) throw err;
   //console.log(conn);
   DATABASE_CONN = conn;
@@ -22,7 +25,6 @@ async function add_artist(body) {
   try {
     let { value: Artist, error } = validate.Artist(body);
     if (error) throw new Error(error);
-    let user = Artist.user;
     delete Artist.user;
     let artistsArray = await (
       await Artists.filter({ link: Artist.link }).run(DATABASE_CONN)
