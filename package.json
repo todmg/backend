@@ -1,14 +1,14 @@
 {
-  "name": "todmg-api",
-  "version": "1.0.0",
+  "name": "crown",
+  "version": "0.0.1-alpha",
   "description": "",
-  "main": "index.js",
+  "main": "crown.js",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.21",
+    "moment": "^2.27.0",
     "morgan": "^1.10.0",
     "rethinkdb": "^2.4.2"
   },

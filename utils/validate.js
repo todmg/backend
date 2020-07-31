@@ -2,24 +2,27 @@ const Joi = require("@hapi/joi");
 
 const releaseValidation = (body) => {
   const Schema = Joi.object({
+    user: Joi.any(),
+    internal: Joi.string().required(),
     title: Joi.string().required(),
     desc: Joi.string().required(),
-    artist: Joi.string().required(),
-    date: Joi.date().default(Date.now()).required(),
-    tags: Joi.array().required(),
-    artwork: Joi.link().required(),
-    link: Joi.link().required(),
+    artists: Joi.array().required(),
+    date: Joi.string().required(),
+    artwork: Joi.string().required(),
+    link: Joi.string().required(),
+    hidden: Joi.boolean().required(),
   });
 
   return Schema.validate(body);
 };
 const ArtistValidation = (body) => {
   const Schema = Joi.object({
+    user: Joi.any(),
     name: Joi.string().required(),
+    link: Joi.string().required(),
     desc: Joi.string(),
     img: Joi.string(),
     hometown: Joi.string(),
-    tags: Joi.array().required(),
     releases: Joi.array(),
     interviews: Joi.array(),
   });

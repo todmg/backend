@@ -1,10 +1,11 @@
 const express = require("express");
 const chalk = require("chalk");
 const morgan = require("morgan");
-
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
 const port = 42069;
-console.log("Starting THRIVE OR DIE Backend API...");
+console.log("Starting 👑 CROWN...");
 
 // ! Middleware Stuff
 app.use("/assets", express.static("./assets"));
@@ -20,9 +21,14 @@ app.use(
   })
 );
 
+app.use(express.json());
+
+const apiv1 = require("./routes/v1api");
+app.use("/v1", apiv1);
+
 // Handle 404
 app.use(function (req, res) {
-  res.status(404).json({ success: false, error: "There is nothing here." });
+  res.status(404).json({ success: false, error: "There is nothing here..." });
 });
 
 // ! the important bits
