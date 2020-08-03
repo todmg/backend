@@ -1,6 +1,6 @@
 <img src="./assets/images/crown.png" align="right">
 
-# 👑 CROWN by [scyrescyre](https://werewolf.computer) & [xshagia](https://twitter.com/xshagia)
+# 👑 CROWN by [scyrescyre](https://twitter.com/scyrescyre) & [xshagia](https://twitter.com/xshagia)
 
 ## Made for [todmg](https://todmg.club)
 
@@ -25,7 +25,7 @@
 For `utils/database.js` to work properly, you need 5 Tables:
 
 - `artists`
-- `interviews` ( Optional )
+- `interviews`
 - `releases`
 - `settings`
 - `users`
@@ -42,8 +42,13 @@ nano config.js
 npm i
 
 
-# Run it
-npm run dev # run this first to check if everything works as intended
-
-npm run prod # make the code use production variables
+# Depending on if you want to run it in prod or dev mode
+# use
+npm run prod
+# or
+npm run dev
 ```
+
+## ⚙ Domain Setup
+
+👑 generally runs on it's own subdomain i.e. `crown.todmg.club` and was not tested to be ran like `todmg.club/crown`, it may be possible to mount it like that but there's no guaranties from us that it will work.
