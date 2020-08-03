@@ -2,19 +2,24 @@ const ch = require("chalk");
 const r = require("rethinkdb");
 const validate = require("./validate");
 const config = require("../config");
+let prod = process.conf.prod || config.prod || false;
+console.log(`Running Crown in ${prod ? "Production" : "Development"} Mode`);
+if (typeof prod != "boolean")
+  throw new Error(
+    "Variable prod has to be a boolean.\nPass either --prod (or --prod false) or edit your config.js"
+  );
+
 let DATABASE_CONN;
-r.connect({ host: config.database, port: config.db_port }, function (
+r.connect({ host: config.database_url, port: config.db_port }, function (
   err,
   conn
 ) {
   if (err) throw err;
-  //console.log(conn);
   DATABASE_CONN = conn;
   console.log(`${ch.green(`[ DATABASE Util ]`)} Connected`);
 });
 
-//console.log(config.dev ? "todmg_dev" : "todmg");
-let db = r.db(config.dev ? "todmg_dev" : "todmg");
+let db = r.db(config.dev ? config.database[0] : config.database[1]);
 let { Artists, Interviews, Releases } = {
   Artists: db.table("artists"),
   Interviews: db.table("interviews"),
@@ -140,14 +145,16 @@ async function get_artist(link) {
       };
     return {
       success: true,
-      link: Artist.link,
-      name: Artist.name,
-      desc: Artist.desc,
-      img: Artist.img,
-      releases: Artist.releases,
+      data: {
+        link: Artist.link,
+        name: Artist.name,
+        desc: Artist.desc,
+        img: Artist.img,
+        releases: Artist.releases,
+      },
     };
   } catch (error) {
-    throw new Error(error.message);
+    return { success: false, error: error.message };
   }
 }
 async function get_release(internal) {
@@ -156,14 +163,16 @@ async function get_release(internal) {
     let releaseArray = await ReleaseDB.toArray();
     let Release = releaseArray[0];
     return {
-      internal: Release.internal,
-      title: Release.title,
-      desc: Release.desc,
-      artwork: Release.artwork,
-      link: Release.link,
-      date: Release.date,
-      hidden: Release.hidden,
-      artists: Release.artists,
+      data: {
+        internal: Release.internal,
+        title: Release.title,
+        desc: Release.desc,
+        artwork: Release.artwork,
+        link: Release.link,
+        date: Release.date,
+        hidden: Release.hidden,
+        artists: Release.artists,
+      },
       success: true,
     };
   } catch (error) {
@@ -175,7 +184,7 @@ async function get_allReleases() {
   try {
     let ReleaseDB = await Releases.run(DATABASE_CONN);
     let releaseArray = await ReleaseDB.toArray();
-    return { success: true, releases: releaseArray };
+    return { success: true, data: { releases: releaseArray } };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -184,10 +193,15 @@ async function get_allArtists() {
   try {
     let ArtistDB = await Artists.run(DATABASE_CONN);
     let artistArray = await ArtistDB.toArray();
-    return { success: true, artists: artistArray };
+    return { success: true, data: { artists: artistArray } };
   } catch (error) {
     return { success: false, error: error.message };
   }
+}
+
+async function register(body) {
+  let { value: user, error } = validate.User(body);
+  if (error) throw new Error(error);
 }
 
 module.exports = {
@@ -205,4 +219,5 @@ module.exports = {
     AllReleases: get_allReleases,
     AllArtists: get_allArtists,
   },
+  auth: {},
 };

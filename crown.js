@@ -2,10 +2,12 @@ const express = require("express");
 const chalk = require("chalk");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
-dotenv.config();
+const argv = require("minimist")(process.argv.slice(2));
+const config = require("./config");
+process.conf = argv;
 const app = express();
-const port = 42069;
-console.log("Starting 👑 CROWN...");
+const port = config.port || 42069;
+console.log("Starting CROWN...");
 
 // ! Middleware Stuff
 app.use("/assets", express.static("./assets"));

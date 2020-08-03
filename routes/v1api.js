@@ -38,7 +38,7 @@ router.delete("/release/:internal", async (req, res) => {
   return res.status(s).jsonp(deleted);
 });
 
-router.get("/all/:kind", async (req, res) => {
+router.get("/all/:kind", async (req, res, next) => {
   let s;
   switch (req.params.kind) {
     case "artists":
@@ -50,9 +50,7 @@ router.get("/all/:kind", async (req, res) => {
       s = AllReleases.success ? 200 : 400;
       return res.status(s).json(AllReleases);
     default:
-      return res
-        .status(404)
-        .json({ success: false, error: "There is nothing here..." });
+      next();
   }
 });
 
