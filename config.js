@@ -2,9 +2,23 @@
 // You're not able to get into our Database, don't worry.
 
 module.exports = {
-  prod: false, // Determines if Development DB or Production DB is used
-  database_url: "db.hokkqi.services", // RethinkDB IP or URL
-  db_port: 28015, // RethinkDB Port ( NOT THE WEBINTERFACE )
-  database: ["todmg_dev", "todmg"],
-  // Used Databases, [0] is the Development Database and [1] is the Production Database
+  companyName: "THRIVE OR DIE", // (Optional) May show up in API Responses.
+  prod: false, // Determines if Development or Production DB is used
+  port: 42069, // Port on which 👑 is supposed to run
+  database: {
+    // Example: dCpk2dTE:aaHbS2x6:oWzfN7oo:ywQ0yPGz:3rUzHVuZ
+    url: "db.hokkqi.services", // RethinkDB IP or URL
+    port: 28015, // RethinkDB Port ( NOT THE WEBINTERFACE )
+    dbs: ["todmg_dev", "todmg"],
+    // Used Databases, [0] is the Development Database and [1] is the Production Database
+    apikey: {
+      parts: 5, // How many parts should be generated?
+      length: 5, // How long should each part be?
+      separator: ":", // With which character should the parts be sepatated?
+    },
+    elixire: {
+      instance_url: "<Your Instance>",
+      apikey: "<API Key>",
+    },
+  },
 };

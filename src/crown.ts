@@ -1,15 +1,17 @@
-const express = require("express");
-const chalk = require("chalk");
-const morgan = require("morgan");
-const dotenv = require("dotenv");
-const argv = require("minimist")(process.argv.slice(2));
-const config = require("./config");
-process.conf = argv;
-const app = express();
-const port = config.port || 42069;
-console.log("Starting CROWN...");
+import express from "express";
+import chalk from "chalk";
+import morgan from "morgan";
+import minimist from "minimist";
+import config from "../config.js";
+const args = minimist(process.argv.slice(2));
+globalThis.args = args;
+globalThis.conf = config;
 
-// ! Middleware Stuff
+const app = express();
+const port = args.port || config.port || 42069;
+
+console.log(`Starting ${chalk.yellow("CROWN")}...`);
+
 app.use("/assets", express.static("./assets"));
 app.use(
   morgan((tokens, req, res) => {

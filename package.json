@@ -1,27 +1,27 @@
 {
-  "name": "crown",
-  "version": "0.0.1-alpha",
+  "name": "crown-ts",
+  "version": "0.1.0",
   "description": "",
-  "main": "crown.js",
-  "dependencies": {
-    "@hapi/joi": "^17.1.1",
-    "bcrypt": "^5.0.0",
-    "chalk": "^4.1.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "minimist": "^1.2.5",
-    "moment": "^2.27.0",
-    "morgan": "^1.10.0",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "rethinkdb": "^2.4.2"
-  },
-  "devDependencies": {},
+  "main": "build/crown.js",
   "scripts": {
-    "dev": "node .",
-    "prod": "node . --prod"
+    "build": "rm -rf build && tsc",
+    "dev": "nodemon src/crown.ts --dev"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.0.27",
+    "bcrypt": "^5.0.0",
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "joi": "^17.2.0",
+    "minimist": "^1.2.5",
+    "moment": "^2.27.0",
+    "morgan": "^1.10.0",
+    "nodejs-snowflake": "^1.5.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "rethinkdb": "^2.4.2"
+  }
 }
