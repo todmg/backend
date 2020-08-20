@@ -8,12 +8,14 @@ import {
   DefaultResponse,
   AllArtists,
   AllReleases,
+  User,
+  CreatedUser,
 } from "./interfaces";
 import * as gen from "./generators";
 import { ArtistValidation, ReleaseValidation } from "./validate";
 import r from "rethinkdb";
 import chalk from "chalk";
-import bc from "bcrypt";
+import * as bc from "bcrypt";
 
 let prod = globalThis.args.prod || globalThis.conf.prod || false;
 let Artists: any, Interviews: any, Releases: any, Users: any;
@@ -161,6 +163,8 @@ class Database {
         this.#connection
       );
       let ReleaseArray = await ReleaseInDB.toArray();
+      if (ReleaseArray.length === 0)
+        throw new Error("No Release with that that internal name in Database");
       let FoundRelease = ReleaseArray[0];
 
       FoundRelease.artists.forEach((Artist) => {
@@ -250,6 +254,13 @@ class Database {
       return { success: false, error: error.message };
     }
   }
+
+  async createUser(user: User): Promise<CreatedUser> {
+    console.log(user);
+    let { username, password } = user;
+    let hashed = bc.hash(user.password, 10);
+    return user;
+  }
 } // End of Class
 
-export = Database;
+export default Database;

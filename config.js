@@ -7,7 +7,7 @@ module.exports = {
   port: 42069, // Port on which 👑 is supposed to run
   database: {
     // Example: dCpk2dTE:aaHbS2x6:oWzfN7oo:ywQ0yPGz:3rUzHVuZ
-    url: "db.hokkqi.services", // RethinkDB IP or URL
+    url: "database.todmg.club", // RethinkDB IP or URL
     port: 28015, // RethinkDB Port ( NOT THE WEBINTERFACE )
     dbs: ["todmg_dev", "todmg"],
     // Used Databases, [0] is the Development Database and [1] is the Production Database
@@ -17,7 +17,7 @@ module.exports = {
       separator: ":", // With which character should the parts be sepatated?
     },
     elixire: {
-      instance_url: "<Your Instance>",
+      instance_url: "<Your Instance URL>",
       apikey: "<API Key>",
     },
   },

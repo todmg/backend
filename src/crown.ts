@@ -28,7 +28,9 @@ app.use(
 app.use(express.json());
 
 const apiv1 = require("./routes/v1api");
-app.use("/v1", apiv1);
+app.use("/api/v1", apiv1);
+const home = require("./routes/home");
+app.use("/", home);
 
 // Handle 404
 app.use(function (req, res) {

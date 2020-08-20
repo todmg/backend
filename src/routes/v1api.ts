@@ -7,7 +7,7 @@ import {
   ReleaseReponse,
   DefaultResponse,
 } from "utils/interfaces";
-let database = new Database(globalThis.conf.database);
+import database from "../utils/init";
 
 router.get("/", async (req, res) => {
   return res.json({
@@ -83,11 +83,6 @@ router.get("/release/:internal", async (req, res) => {
   return res.status(s).json(Release);
 });
 
-// router.post("/auth/register", async (req, res) => {
-//   let User = await db.auth.register(req.body);
-//   let s = User.success ? 200 : 400;
-//   return res.status(s).json(User);
-// });
 // router.post("/auth/apikey", async (req, res) => {
 //   let User = await db.auth.apikey(req.body);
 //   let s = User.success ? 200 : 400;

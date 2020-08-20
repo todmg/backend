@@ -72,6 +72,12 @@ declare namespace Crown {
     error?: string;
     data?: Release[];
   }
+  interface User {
+    success?: boolean;
+    username: string;
+    password: string;
+  }
+  interface CreatedUser {}
 }
 
 export = Crown;
